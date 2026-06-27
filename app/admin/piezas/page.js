@@ -39,7 +39,7 @@ export default function AdminPiezas() {
   function openEdit(pieza) {
     setEditing(pieza.id);
     setForm({
-      titulo: pieza.titulo, descripcion: pieza.descripcion || "", precio: pieza.precio || "",
+      titulo: pieza.titulo, descripcion: pieza.descripcion || "", precio: pieza.precio ? (pieza.precio / 100).toFixed(2) : "",
       coleccion_id: pieza.coleccion_id || "", tipo: pieza.tipo || "normal",
       imagenes: pieza.imagenes || [], dimensiones: pieza.dimensiones || "",
       tecnica: pieza.tecnica || "", disponible: pieza.disponible, destacado: pieza.destacado || false,
@@ -48,8 +48,8 @@ export default function AdminPiezas() {
       const sub = pieza.gamas.find((g) => g.tipo === "subconsciente") || {};
       const real = pieza.gamas.find((g) => g.tipo === "real") || {};
       setGamas([
-        { tipo: "subconsciente", emoji: sub.emoji || "", descripcion: sub.descripcion || "", precio: sub.precio || "" },
-        { tipo: "real", emoji: real.emoji || "", descripcion: real.descripcion || "", precio: real.precio || "" },
+        { tipo: "subconsciente", emoji: sub.emoji || "", descripcion: sub.descripcion || "", precio: sub.precio ? (sub.precio / 100).toFixed(2) : "" },
+        { tipo: "real", emoji: real.emoji || "", descripcion: real.descripcion || "", precio: real.precio ? (real.precio / 100).toFixed(2) : "" },
       ]);
     } else {
       setGamas([{ tipo: "subconsciente", emoji: "", descripcion: "", precio: "" }, { tipo: "real", emoji: "", descripcion: "", precio: "" }]);
@@ -86,7 +86,7 @@ export default function AdminPiezas() {
     setSaving(true);
 
     const payload = { ...form };
-    if (payload.precio) payload.precio = parseFloat(payload.precio);
+    if (payload.precio) payload.precio = Math.round(parseFloat(payload.precio) * 100);
     if (!payload.coleccion_id) payload.coleccion_id = null;
 
     let result;
@@ -112,7 +112,7 @@ export default function AdminPiezas() {
       // Insert new gamas
       const gamasToInsert = gamas
         .filter((g) => g.descripcion || g.emoji)
-        .map((g) => ({ pieza_id: piezaId, tipo: g.tipo, emoji: g.emoji || null, descripcion: g.descripcion || null, precio: g.precio ? parseFloat(g.precio) : null }));
+        .map((g) => ({ pieza_id: piezaId, tipo: g.tipo, emoji: g.emoji || null, descripcion: g.descripcion || null, precio: g.precio ? Math.round(parseFloat(g.precio) * 100) : null }));
 
       if (gamasToInsert.length > 0) {
         await supabase.from("gamas").insert(gamasToInsert);
@@ -172,7 +172,7 @@ export default function AdminPiezas() {
                     {pieza.tipo === "animal_de_poder" ? "Animal de Poder" : "Normal"}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-[var(--secondary)]">{pieza.precio ? `${pieza.precio}€` : "—"}</td>
+                <td className="px-6 py-4 text-[var(--secondary)]">{pieza.precio ? `${(pieza.precio / 100).toFixed(2).replace(".", ",")}€` : "—"}</td>
                 <td className="px-6 py-4">
                   <span className={`text-xs font-semibold px-2 py-1 rounded-full ${pieza.disponible ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
                     {pieza.disponible ? "Disponible" : "Vendido"}
