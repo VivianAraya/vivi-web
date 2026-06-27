@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { submitEncargo } from "@/lib/supabase/client";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
@@ -21,9 +20,6 @@ const ESTADOS = {
 };
 
 function EncargoForm() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [animal, setAnimal] = useState("");
@@ -34,11 +30,13 @@ function EncargoForm() {
 
   // Pre-fill from query params
   useEffect(() => {
-    const gamaParam = searchParams.get("gama");
-    const animalParam = searchParams.get("animal");
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const gamaParam = params.get("gama");
+    const animalParam = params.get("animal");
     if (gamaParam && GAMAS.some((g) => g.id === gamaParam)) setGama(gamaParam);
     if (animalParam) setAnimal(decodeURIComponent(animalParam));
-  }, [searchParams]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -219,15 +217,7 @@ export default function EncargoPage() {
       <Nav />
       <main className="flex-1 py-[60px] px-6 md:py-[100px]">
         <div className="max-w-[560px] mx-auto">
-          <Suspense
-            fallback={
-              <div className="pergamino text-center py-10 text-[var(--secondary)]">
-                Cargando…
-              </div>
-            }
-          >
-            <EncargoForm />
-          </Suspense>
+          <EncargoForm />
         </div>
       </main>
       <Footer />
