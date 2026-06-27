@@ -53,6 +53,12 @@ export default function Nav() {
             >
               Tienda
             </a>
+            <a
+              href="/login"
+              className="text-[var(--on-neutral)]/30 text-xs font-medium transition-colors duration-300 hover:text-[var(--on-neutral)]/50 ml-1"
+            >
+              Iniciar sesión
+            </a>
           </div>
 
           <button
@@ -104,6 +110,13 @@ export default function Nav() {
           className="no-underline text-[var(--tertiary)] serif text-[1.6rem] font-semibold"
         >
           Tienda
+        </a>
+        <a
+          href="/login"
+          onClick={closeMenu}
+          className="no-underline text-[var(--on-neutral)]/30 serif text-[1.2rem] font-medium mt-4"
+        >
+          Iniciar sesión
         </a>
       </div>
     </>

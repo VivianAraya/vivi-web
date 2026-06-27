@@ -6,6 +6,7 @@ const footerLinks = [
   { href: "#encargos", label: "Encargos" },
   { href: "#", label: "Tienda" },
   { href: "#", label: "Contacto" },
+  { href: "/login", label: "Iniciar sesión" },
 ];
 
 export default function Footer() {
