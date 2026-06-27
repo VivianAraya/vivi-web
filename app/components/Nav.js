@@ -33,9 +33,9 @@ export default function Nav() {
         style={{ background: "rgba(250,248,245,0.92)" }}
       >
         <div className="flex items-center justify-between px-6 max-w-[1200px] mx-auto py-4">
-          <div className="text-[1.4rem] font-bold text-[var(--primary)] tracking-[-0.02em] serif">
+          <a href="/" className="text-[1.4rem] font-bold text-[var(--primary)] tracking-[-0.02em] serif no-underline hover:text-[var(--whisper)] transition-colors">
             Vivián Araya
-          </div>
+          </a>
 
           <div className="hidden md:flex gap-6 items-center">
             {links.map((link) => (
