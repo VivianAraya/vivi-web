@@ -9,33 +9,33 @@ const swatches = [
 
 export default function TintesNaturales() {
   return (
-    <section id="tintes" className="py-[80px] px-6 md:px-12 bg-white">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[60px] items-center">
-        <div className="grid grid-cols-3 gap-3">
+    <section id="tintes" className="py-[100px] px-6 bg-white">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-3 gap-3 reveal">
           {swatches.map((bg, i) => (
             <div
               key={i}
-              className={`h-[100px] rounded-[var(--radius-sm)] ${bg}`}
+              className={`tintes-swatch rounded-[var(--radius-sm)] aspect-square transition-all duration-300 hover:scale-105 ${bg}`}
             />
           ))}
         </div>
-        <div>
-          <h3 className="font-sans text-base font-semibold text-[var(--tertiary)] uppercase tracking-[0.08em] mb-2">
+        <div className="reveal reveal-delay-1">
+          <div className="section-eyebrow mb-3">
             El color nace de la naturaleza
-          </h3>
-          <h2 className="text-[var(--primary)] mb-4">Tintes naturales</h2>
-          <p className="text-[var(--secondary)] text-[0.95rem] mb-5">
+          </div>
+          <h2 className="text-[var(--primary)] mb-5">Tintes naturales</h2>
+          <p className="text-[var(--secondary)] text-[0.95rem] mb-3.5 leading-relaxed">
             Cada tono proviene de plantas, hongos, cortezas y raíces. No hay dos
             tintes iguales: el agua, la estación y la mano de quien tiñe hacen
             cada color irrepetible.
           </p>
-          <p className="text-[var(--secondary)] text-[0.95rem] mb-5">
+          <p className="text-[var(--secondary)] text-[0.95rem] mb-3.5 leading-relaxed">
             De la cúrcuma al añil, de la cáscara de nuez al eucalipto. Un
             proceso lento, artesanal y profundamente conectado con la tierra.
           </p>
           <a
             href="#"
-            className="inline-block px-7 py-3 rounded-[var(--radius-sm)] text-[0.95rem] font-semibold no-underline transition-soft bg-transparent text-[var(--primary)] border border-[1.5px] border-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)]"
+            className="inline-block px-8 py-[14px] rounded-[var(--radius-sm)] text-[0.95rem] font-semibold no-underline transition-all duration-300 bg-transparent text-[var(--primary)] border border-[1.5px] border-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)]"
           >
             Descubrir los tintes
           </a>

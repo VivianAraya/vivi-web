@@ -45,37 +45,47 @@ function Gama({ tipo, data }) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center py-9 px-8 ${
+      className={`flex flex-col justify-center items-center py-12 px-9 text-center relative overflow-hidden ${
         isSubconsciente
-          ? "bg-[var(--mystical-tint)]"
-          : "bg-[#e8f0eb]"
+          ? "bg-[#faf7fc]"
+          : "bg-[#f8faf7]"
       }`}
     >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        style={{
+          background: isSubconsciente
+            ? "radial-gradient(circle at 50% 30%, var(--mystical), transparent 70%)"
+            : "radial-gradient(circle at 50% 30%, var(--primary), transparent 70%)",
+        }}
+      />
       <span
-        className={`gama-label-caps mb-1.5 ${
-          isSubconsciente ? "text-[var(--mystical)]" : "text-[var(--primary)]"
+        className={`font-sans text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-1.5 px-3.5 py-1 rounded-[20px] ${
+          isSubconsciente
+            ? "text-[var(--mystical)] bg-[rgba(107,80,120,0.08)]"
+            : "text-[var(--primary)] bg-[rgba(45,74,62,0.06)]"
         }`}
       >
         {isSubconsciente ? "🧠 El que llevas dentro" : "👁️ El que ves"}
       </span>
       <span
-        className={`font-sans text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-center mb-1 ${
+        className={`font-sans text-[0.68rem] font-semibold uppercase tracking-[0.1em] mb-4 ${
           isSubconsciente ? "text-[var(--mystical)]" : "text-[var(--primary)]"
         }`}
       >
         {isSubconsciente ? "Subconsciente" : "Real"}
       </span>
       <div
-        className={`w-[130px] h-[130px] rounded-full mx-auto mb-4 flex items-center justify-center text-[3.5rem] relative z-[1] ${
+        className={`w-[120px] h-[120px] rounded-full flex items-center justify-center text-[3.2rem] mb-4 relative z-[1] ${
           isSubconsciente
-            ? "bg-gradient-to-br from-[#ede0f2] to-[#d8c8e8] border-2 border-[var(--mystical-tint)]"
-            : "bg-gradient-to-br from-[#e8e0d0] to-[#d8cfba] border-2 border-[#d5cfc0]"
+            ? "bg-gradient-to-br from-[#f0e8f5] to-[#e2d5eb] border-2 border-[rgba(107,80,120,0.15)]"
+            : "bg-gradient-to-br from-[#e8efe8] to-[#d5e0d5] border-2 border-[rgba(45,74,62,0.12)]"
         }`}
       >
         {data.avatar}
       </div>
       <span
-        className={`tag-pieza-unica mb-2 ${
+        className={`tag-pieza-unica mb-3 ${
           isSubconsciente
             ? "bg-[#f5eff8] text-[var(--mystical)]"
             : "bg-[#fef3e0] text-[var(--tertiary)]"
@@ -83,18 +93,18 @@ function Gama({ tipo, data }) {
       >
         Pieza única
       </span>
-      <p className="text-sm text-[var(--secondary)] italic text-center mb-3">
+      <p className="text-sm text-[var(--secondary)] italic text-center mb-3.5 max-w-[260px] leading-relaxed">
         {data.desc}
       </p>
-      <p className="serif font-bold text-[var(--tertiary)] text-[1.05rem] text-center mb-2.5">
+      <p className="serif font-bold text-[var(--tertiary)] text-[1.05rem] mb-4">
         {data.precio}
       </p>
       <a
         href="#"
-        className={`inline-block px-5 py-[7px] rounded-[var(--radius-sm)] text-xs font-semibold no-underline text-center transition-soft ${
+        className={`inline-block text-[0.82rem] px-[22px] py-[9px] rounded-[var(--radius-sm)] font-semibold no-underline transition-all duration-300 ${
           isSubconsciente
-            ? "bg-[var(--mystical)] text-[var(--on-primary)] hover:bg-[#7d6290]"
-            : "bg-[var(--primary)] text-[var(--on-primary)] hover:bg-[var(--whisper)]"
+            ? "bg-[var(--primary)] text-[var(--on-primary)] hover:bg-[var(--whisper)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(45,74,62,0.25)]"
+            : "bg-transparent text-[var(--primary)] border border-[1.5px] border-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)]"
         }`}
       >
         Comprar
@@ -105,12 +115,14 @@ function Gama({ tipo, data }) {
 
 export default function AnimalesDePoder() {
   return (
-    <section id="animales" className="py-[80px] px-6 md:px-12 bg-[var(--neutral)]">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="text-center mb-12">
-          <div className="section-eyebrow mb-3">Colección principal</div>
-          <h2 className="section-title mb-2">Animales de Poder</h2>
-          <p className="section-subtitle">
+    <section id="animales" className="py-[100px] px-6 bg-[var(--neutral)]">
+      <div className="max-w-[960px] mx-auto">
+        <div className="text-center mb-14">
+          <div className="section-eyebrow reveal">Colección principal</div>
+          <h2 className="text-[var(--primary)] mt-2 reveal reveal-delay-1">
+            Animales de Poder
+          </h2>
+          <p className="text-[var(--secondary)] text-[1.05rem] max-w-[550px] mx-auto reveal reveal-delay-1">
             Cada animal tiene dos caras. La que ve tu subconsciente y la que
             camina por el mundo.
           </p>
@@ -119,7 +131,7 @@ export default function AnimalesDePoder() {
         {animales.map((animal, i) => (
           <div
             key={i}
-            className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-white rounded-[var(--radius-md)] overflow-hidden shadow-[var(--shadow)] mb-7 last:mb-0"
+            className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-[var(--radius-md)] overflow-hidden shadow-[var(--shadow)] mb-7 last:mb-0 border border-[rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[var(--shadow-hover)] hover:-translate-y-0.5 reveal"
           >
             <Gama tipo="subconsciente" data={animal.subconsciente} />
             <Gama tipo="real" data={animal.real} />
