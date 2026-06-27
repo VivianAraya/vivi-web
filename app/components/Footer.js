@@ -1,11 +1,11 @@
 const footerLinks = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#colecciones", label: "Colecciones" },
-  { href: "#animales", label: "Animales de Poder" },
-  { href: "#tintes", label: "Tintes" },
-  { href: "#encargos", label: "Encargos" },
+  { href: "/#inicio", label: "Inicio" },
+  { href: "/#colecciones", label: "Colecciones" },
+  { href: "/#animales", label: "Animales de Poder" },
+  { href: "/#tintes", label: "Tintes" },
+  { href: "/#encargos", label: "Encargos" },
   { href: "/tienda", label: "Tienda" },
-  { href: "#", label: "Contacto" },
+  { href: "/#contacto", label: "Contacto" },
   { href: "/login", label: "Iniciar sesión" },
 ];
 

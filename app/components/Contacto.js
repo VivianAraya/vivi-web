@@ -6,7 +6,7 @@ const links = [
 
 export default function Contacto() {
   return (
-    <section className="py-[100px] px-6 text-center relative overflow-hidden"
+    <section id="contacto" className="py-[100px] px-6 text-center relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, var(--primary), #243b32)" }}
     >
       <svg

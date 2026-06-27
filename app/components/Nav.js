@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 
 const links = [
-  { href: "#colecciones", label: "Colecciones" },
-  { href: "#animales", label: "Animales de Poder" },
-  { href: "#tintes", label: "Tintes" },
-  { href: "#encargos", label: "Encargos" },
-  { href: "#sobre", label: "Sobre Vivi" },
+  { href: "/#colecciones", label: "Colecciones" },
+  { href: "/#animales", label: "Animales de Poder" },
+  { href: "/#tintes", label: "Tintes" },
+  { href: "/#encargos", label: "Encargos" },
+  { href: "/#sobre", label: "Sobre Vivi" },
 ];
 
 export default function Nav() {

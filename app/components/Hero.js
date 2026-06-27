@@ -48,7 +48,7 @@ export default function Hero() {
             Ver colecciones
           </a>
           <a
-            href="#encargos"
+            href="/encargar"
             className="inline-block px-8 py-[14px] rounded-[var(--radius-sm)] text-[0.95rem] font-semibold no-underline transition-all duration-300 bg-transparent text-[var(--primary)] border border-[1.5px] border-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)]"
           >
             Encargar pieza personalizada

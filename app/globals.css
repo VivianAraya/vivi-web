@@ -193,69 +193,374 @@ h3 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== PERGAMINO ENTRANCE ===== */
-@keyframes pergamino-unfurl {
+/* ===== PERGAMINO ENTRANCE — MÍSTICO ===== */
+@keyframes pergamino-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(184, 147, 60, 0.08),
+      0 0 60px rgba(184, 147, 60, 0.04),
+      0 4px 30px rgba(107, 80, 120, 0.06),
+      0 8px 60px rgba(0, 0, 0, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(184, 147, 60, 0.14),
+      0 0 80px rgba(184, 147, 60, 0.07),
+      0 4px 36px rgba(107, 80, 120, 0.09),
+      0 8px 64px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@keyframes pergamino-materialize {
   0% {
     opacity: 0;
-    transform: scale(0.93) perspective(800px) rotateX(3deg);
-    filter: blur(3px);
+    transform: scale(0.88) perspective(1200px) rotateX(6deg) translateY(30px);
+    filter: blur(8px) brightness(1.4);
   }
-  40% {
+  25% {
+    opacity: 0.3;
+    filter: blur(5px) brightness(1.3);
+  }
+  50% {
     opacity: 0.7;
-    filter: blur(1px);
+    transform: scale(0.96) perspective(1200px) rotateX(2deg) translateY(8px);
+    filter: blur(2px) brightness(1.1);
+  }
+  75% {
+    opacity: 0.9;
+    filter: blur(0.5px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) perspective(800px) rotateX(0deg);
-    filter: blur(0);
+    transform: scale(1) perspective(1200px) rotateX(0deg) translateY(0);
+    filter: blur(0) brightness(1);
   }
 }
 
-.pergamino {
-  animation: pergamino-unfurl 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
-  background: linear-gradient(
-    180deg,
-    #fdfbf7 0%,
-    #faf8f5 30%,
-    #f7f4ee 100%
-  );
-  border: 1px solid rgba(139, 115, 85, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 48px 36px;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.03),
-    0 6px 24px rgba(0, 0, 0, 0.05),
-    0 12px 48px rgba(139, 115, 85, 0.06);
-  position: relative;
+@keyframes pergamino-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
-.pergamino::before,
-.pergamino::after {
+@keyframes pergamino-glow-before {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  60% { opacity: 0.6; }
+  100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes pergamino-mandala-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pergamino-mandala-appear {
+  0% { opacity: 0; transform: scale(0.3); }
+  60% { opacity: 0.7; }
+  100% { opacity: 0.35; transform: scale(1); }
+}
+
+@keyframes pergamino-dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.4); }
+}
+
+/* Page background — subtle holy atmosphere */
+.encargo-page-bg {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(184, 147, 60, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 50% 80%, rgba(107, 80, 120, 0.03) 0%, transparent 70%),
+    linear-gradient(180deg, #fdfbf7 0%, #faf8f5 40%, #f5f1ea 100%);
+}
+
+/* The sacred card */
+.pergamino {
+  animation:
+    pergamino-materialize 1.4s cubic-bezier(0.16, 1, 0.3, 1) both,
+    pergamino-float 6s ease-in-out 1.6s infinite;
+  background:
+    linear-gradient(180deg, #fefcf8 0%, #faf7f1 25%, #f7f3eb 100%);
+  border: 1px solid rgba(139, 115, 85, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 56px 40px;
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.pergamino::before {
   content: "";
   position: absolute;
+  inset: -60px;
+  top: -120px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 1.5px;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle,
+    rgba(184, 147, 60, 0.08) 0%,
+    rgba(184, 147, 60, 0.03) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: pergamino-glow-before 2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mandala ornament */
+.pergamino-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  animation: pergamino-mandala-appear 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.4s;
+}
+
+.pergamino-ornament-line {
+  flex: 0 0 40px;
+  height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(184, 147, 60, 0.25),
+    rgba(184, 147, 60, 0.3),
     transparent
   );
 }
 
-.pergamino::before {
-  top: 20px;
+.pergamino-ornament-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(184, 147, 60, 0.4);
+  animation: pergamino-dot-pulse 3s ease-in-out infinite;
 }
 
+.pergamino-ornament-dot:nth-child(2) { animation-delay: 0.3s; }
+.pergamino-ornament-dot:nth-child(3) { animation-delay: 0.6s; }
+.pergamino-ornament-dot:nth-child(4) { animation-delay: 0.9s; }
+.pergamino-ornament-dot:nth-child(5) { animation-delay: 1.2s; }
+
+/* Mandala SVG */
+.pergamino-mandala {
+  width: 32px;
+  height: 32px;
+  color: rgba(184, 147, 60, 0.3);
+  flex-shrink: 0;
+  animation: pergamino-mandala-spin 40s linear infinite;
+}
+
+/* Animated border glow */
 .pergamino::after {
-  bottom: 20px;
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-lg) + 2px);
+  padding: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(184, 147, 60, 0.15),
+    rgba(107, 80, 120, 0.06),
+    rgba(184, 147, 60, 0.1)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Success state */
+.pergamino-success {
+  text-align: center;
+}
+
+.pergamino-success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  animation: pergamino-materialize 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Form elements inside pergamino */
+.pergamino label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--secondary);
+  margin-bottom: 7px;
+}
+
+.pergamino input,
+.pergamino textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(139, 115, 85, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--on-neutral);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  transition: all 0.3s ease;
+}
+
+.pergamino input::placeholder,
+.pergamino textarea::placeholder {
+  color: var(--secondary);
+  opacity: 0.35;
+}
+
+.pergamino input:focus,
+.pergamino textarea:focus {
+  outline: none;
+  border-color: rgba(184, 147, 60, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(184, 147, 60, 0.06);
+}
+
+.pergamino textarea {
+  resize: none;
+}
+
+/* Gama buttons inside pergamino */
+.pergamino .gama-btn {
+  font-family: var(--font-sans);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  border: 1.5px solid rgba(139, 115, 85, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--on-neutral);
+}
+
+.pergamino .gama-btn:hover {
+  border-color: rgba(184, 147, 60, 0.3);
+  background: rgba(184, 147, 60, 0.04);
+}
+
+.pergamino .gama-btn.selected-subconsciente {
+  background: var(--mystical);
+  border-color: var(--mystical);
+  color: white;
+  box-shadow: 0 4px 20px rgba(107, 80, 120, 0.25);
+}
+
+.pergamino .gama-btn.selected-real {
+  background: var(--tertiary);
+  border-color: var(--tertiary);
+  color: white;
+  box-shadow: 0 4px 20px rgba(184, 147, 60, 0.25);
+}
+
+.pergamino .gama-btn.selected-ambas {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 4px 20px rgba(45, 74, 62, 0.25);
+}
+
+/* Sacred submit button */
+.pergamino .btn-sacred {
+  width: 100%;
+  padding: 15px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  background: linear-gradient(135deg, #b8933c 0%, #c9a54a 50%, #b8933c 100%);
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.pergamino .btn-sacred::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.pergamino .btn-sacred:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 24px rgba(184, 147, 60, 0.3),
+    0 0 40px rgba(184, 147, 60, 0.1);
+}
+
+.pergamino .btn-sacred:hover::after {
+  opacity: 1;
+}
+
+.pergamino .btn-sacred:active {
+  transform: translateY(0);
+}
+
+.pergamino .btn-sacred:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Section divider — thin gold line with dot */
+.pergamino-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0;
+}
+
+.pergamino-divider::before,
+.pergamino-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(184, 147, 60, 0.2),
+    transparent
+  );
+}
+
+.pergamino-divider-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(184, 147, 60, 0.35);
+}
+
+/* Intro text — appears after card */
+.pergamino-intro {
+  animation: pergamino-materialize 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.3s;
 }
 
 @media (max-width: 640px) {
   .pergamino {
-    padding: 32px 20px;
+    padding: 36px 22px;
+  }
+  .pergamino::before {
+    width: 180px;
+    height: 180px;
   }
 }
 
@@ -265,6 +570,15 @@ h3 {
     opacity: 1;
     transform: none;
     filter: none;
+  }
+  .pergamino::before,
+  .pergamino::after,
+  .pergamino-ornament,
+  .pergamino-intro,
+  .pergamino-mandala {
+    animation: none !important;
+    opacity: 0.35;
+    transform: none !important;
   }
 }
 
