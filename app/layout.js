@@ -1,6 +1,7 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ScrollReveal from "./components/ScrollReveal";
+import VisitTracker from "./components/VisitTracker";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-serif",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col">
         {children}
         <ScrollReveal />
+        <VisitTracker />
       </body>
     </html>
   );
