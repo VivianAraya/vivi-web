@@ -55,11 +55,11 @@ function Gama({ tipo, data }) {
       </p>
       {data.precio && (
         <p className="serif font-bold text-[var(--tertiary)] text-[1.05rem] text-center mb-4">
-          {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(data.precio)}
+          {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(data.precio / 100)}
         </p>
       )}
       <a
-        href="#"
+        href="/tienda"
         className={`inline-block px-[22px] py-[9px] rounded-[var(--radius-sm)] text-xs font-semibold no-underline transition-all duration-300 ${
           isSubconsciente
             ? "bg-[var(--mystical)] text-[var(--on-primary)] hover:bg-[#7d6290]"

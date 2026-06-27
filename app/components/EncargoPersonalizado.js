@@ -28,7 +28,7 @@ export default function EncargoPersonalizado() {
           </button>
         </div>
         <a
-          href="#"
+          href="#encargos"
           className="inline-block px-8 py-[14px] rounded-[var(--radius-sm)] text-[0.95rem] font-semibold no-underline transition-all duration-300 bg-[var(--tertiary)] text-[var(--on-primary)] hover:bg-[#a07d2e] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(184,147,60,0.3)] relative"
         >
           Encargar pieza personalizada

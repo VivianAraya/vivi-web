@@ -23,7 +23,7 @@ export default function SobreVivi() {
             con la huella del momento en que fue creada.
           </p>
           <a
-            href="#"
+            href="#sobre"
             className="inline-block px-8 py-[14px] rounded-[var(--radius-sm)] text-[0.95rem] font-semibold no-underline transition-all duration-300 bg-transparent text-[var(--primary)] border border-[1.5px] border-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--on-primary)]"
           >
             Conocer más
