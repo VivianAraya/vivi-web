@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/* ===== DESIGN TOKENS — Vivián Araya ===== */
+:root {
+  --primary: #2d4a3e;
+  --secondary: #6b635b;
+  --tertiary: #b8933c;
+  --neutral: #faf8f5;
+  --whisper: #4a7c5f;
+  --mystical: #6b5078;
+  --mystical-tint: #ece3f2;
+  --earth: #8b7355;
+  --on-primary: #ffffff;
+  --on-neutral: #1c1c1c;
+  --white: #ffffff;
+  --border: rgba(0, 0, 0, 0.06);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-neutral: var(--neutral);
+  --color-whisper: var(--whisper);
+  --color-mystical: var(--mystical);
+  --color-mystical-tint: var(--mystical-tint);
+  --color-earth: var(--earth);
+  --color-on-primary: var(--on-primary);
+  --color-on-neutral: var(--on-neutral);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+/* ===== BASE ===== */
+body {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--on-neutral);
+  background: var(--neutral);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== TYPOGRAPHY HELPERS ===== */
+h1, h2, h3, .serif {
+  font-family: var(--font-serif);
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.section-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--tertiary);
+}
+
+.section-title {
+  color: var(--primary);
+}
+
+.section-subtitle {
+  color: var(--secondary);
+  font-size: 1.05rem;
+}
+
+.gama-label-caps {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.tag-pieza-unica {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ===== ANIMATIONS ===== */
+.transition-soft {
+  transition: all 0.2s ease;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.7rem; }
+}
