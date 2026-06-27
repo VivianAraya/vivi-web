@@ -1,0 +1,51 @@
+import Stripe from "stripe";
+
+let _stripe = null;
+function getStripe() {
+  if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  return _stripe;
+}
+
+export async function POST(request) {
+  try {
+    const stripe = getStripe();
+    const body = await request.json();
+    const { pieza_id, gama_id, titulo, precio, emoji } = body;
+
+    if (!pieza_id) {
+      return Response.json({ error: "Falta pieza_id" }, { status: 400 });
+    }
+
+    // Construir nombre del producto para Stripe
+    let productName = titulo || "Pieza única Vivián Araya";
+    if (emoji) productName = `${emoji} ${productName}`;
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: productName,
+              description: "Pieza única hecha a mano · Vivián Araya",
+            },
+            unit_amount: precio, // en céntimos
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${request.headers.get("origin")}/tienda?success=true`,
+      cancel_url: `${request.headers.get("origin")}/tienda?canceled=true`,
+      metadata: {
+        pieza_id,
+        gama_id: gama_id || "",
+      },
+    });
+
+    return Response.json({ url: session.url });
+  } catch (error) {
+    console.error("Stripe checkout error:", error.message);
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+}

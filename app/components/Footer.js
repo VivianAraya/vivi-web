@@ -4,7 +4,7 @@ const footerLinks = [
   { href: "#animales", label: "Animales de Poder" },
   { href: "#tintes", label: "Tintes" },
   { href: "#encargos", label: "Encargos" },
-  { href: "#", label: "Tienda" },
+  { href: "/tienda", label: "Tienda" },
   { href: "#", label: "Contacto" },
   { href: "/login", label: "Iniciar sesión" },
 ];

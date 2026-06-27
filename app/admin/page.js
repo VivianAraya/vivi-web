@@ -6,6 +6,7 @@ import { getBrowserSupabase } from "@/lib/supabase/client";
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [visitas, setVisitas] = useState(null);
+  const [ventas, setVentas] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +20,9 @@ export default function AdminDashboard() {
         { count: totalVisitas },
         { data: visHoy },
         { data: visSemana },
+        { count: totalPedidos },
+        { count: pedidosPagados },
+        { data: ingresosData },
       ] = await Promise.all([
         supabase.from("colecciones").select("*", { count: "exact", head: true }),
         supabase.from("piezas").select("*", { count: "exact", head: true }),
@@ -26,6 +30,9 @@ export default function AdminDashboard() {
         supabase.from("visitas").select("*", { count: "exact", head: true }),
         supabase.from("visitas").select("*", { count: "exact", head: true }).gte("created_at", todayISO()),
         supabase.from("visitas").select("*", { count: "exact", head: true }).gte("created_at", weekAgoISO()),
+        supabase.from("pedidos").select("*", { count: "exact", head: true }),
+        supabase.from("pedidos").select("*", { count: "exact", head: true }).eq("estado", "pagado"),
+        supabase.from("pedidos").select("total").eq("estado", "pagado"),
       ]);
 
       setStats({ totalColecciones, totalPiezas, encargosPendientes });
@@ -33,6 +40,13 @@ export default function AdminDashboard() {
         total: totalVisitas,
         hoy: visHoy?.length ? visHoy.length : 0,
         semana: visSemana?.length ? visSemana.length : 0,
+      });
+
+      const ingresosTotal = (ingresosData || []).reduce((sum, p) => sum + (p.total || 0), 0);
+      setVentas({
+        total: totalPedidos,
+        pagados: pedidosPagados,
+        ingresos: ingresosTotal,
       });
       setLoading(false);
     }
@@ -67,6 +81,29 @@ export default function AdminDashboard() {
           value={stats?.encargosPendientes}
           href="/admin/encargos"
           color={stats?.encargosPendientes > 0 ? "bg-[#fef3e0] text-[var(--tertiary)]" : "bg-gray-100 text-gray-500"}
+        />
+      </div>
+
+      {/* ─── Ventas ─── */}
+      <h3 className="text-sm uppercase tracking-wider text-[var(--on-neutral)]/40 mb-4">
+        Ventas
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <StatCard
+          label="Pedidos totales"
+          value={ventas?.total}
+          href="/admin/encargos"
+          color="bg-[#f3f0f8] text-[var(--whisper)]"
+        />
+        <StatCard
+          label="Pagados"
+          value={ventas?.pagados}
+          color="bg-[#e8f5e9] text-green-800"
+        />
+        <StatCard
+          label="Ingresos"
+          value={ventas?.ingresos != null ? new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(ventas.ingresos / 100) : "—"}
+          color="bg-[#fff3e0] text-[var(--tertiary)]"
         />
       </div>
 

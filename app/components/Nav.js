@@ -48,7 +48,7 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="#"
+              href="/tienda"
               className="bg-[var(--primary)] text-[var(--on-primary)] px-5 py-[10px] rounded-[var(--radius-sm)] text-sm font-semibold no-underline transition-all duration-300 hover:bg-[var(--whisper)]"
             >
               Tienda
@@ -105,7 +105,7 @@ export default function Nav() {
           </a>
         ))}
         <a
-          href="#"
+          href="/tienda"
           onClick={closeMenu}
           className="no-underline text-[var(--tertiary)] serif text-[1.6rem] font-semibold"
         >
