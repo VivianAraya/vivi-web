@@ -65,6 +65,9 @@ function TiendaInner() {
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-20">
+      <a href="/" className="inline-flex items-center gap-1.5 text-sm text-[var(--secondary)] hover:text-[var(--primary)] transition-colors mb-6">
+        ← Volver al inicio
+      </a>
       <h1 className="text-4xl font-bold text-[var(--primary)] serif mb-4">Tienda</h1>
       <p className="text-[var(--secondary)] mb-12 max-w-xl">
         Cada pieza es única, hecha a mano con tintes naturales. Elige la que resuene contigo.
