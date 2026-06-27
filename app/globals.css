@@ -193,6 +193,81 @@ h3 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== PERGAMINO ENTRANCE ===== */
+@keyframes pergamino-unfurl {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) perspective(800px) rotateX(3deg);
+    filter: blur(3px);
+  }
+  40% {
+    opacity: 0.7;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) perspective(800px) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+
+.pergamino {
+  animation: pergamino-unfurl 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: linear-gradient(
+    180deg,
+    #fdfbf7 0%,
+    #faf8f5 30%,
+    #f7f4ee 100%
+  );
+  border: 1px solid rgba(139, 115, 85, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 48px 36px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 6px 24px rgba(0, 0, 0, 0.05),
+    0 12px 48px rgba(139, 115, 85, 0.06);
+  position: relative;
+}
+
+.pergamino::before,
+.pergamino::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(184, 147, 60, 0.25),
+    transparent
+  );
+}
+
+.pergamino::before {
+  top: 20px;
+}
+
+.pergamino::after {
+  bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .pergamino {
+    padding: 32px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pergamino {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   h1 { font-size: 2.2rem; }
