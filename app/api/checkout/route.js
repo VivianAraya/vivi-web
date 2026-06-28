@@ -20,6 +20,9 @@ export async function POST(request) {
     let productName = titulo || "Pieza única Vivián Araya";
     if (emoji) productName = `${emoji} ${productName}`;
 
+    // Envío: 5 € (500 céntimos) — tarifa plana
+    const shippingCents = 500;
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -30,6 +33,17 @@ export async function POST(request) {
               description: "Pieza única hecha a mano · Vivián Araya",
             },
             unit_amount: precio, // en céntimos
+          },
+          quantity: 1,
+        },
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: "Gastos de envío",
+              description: "Envío nacional certificado",
+            },
+            unit_amount: shippingCents,
           },
           quantity: 1,
         },

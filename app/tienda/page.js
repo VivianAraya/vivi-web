@@ -69,8 +69,11 @@ function TiendaInner() {
         ← Volver al inicio
       </a>
       <h1 className="text-4xl font-bold text-[var(--primary)] serif mb-4">Tienda</h1>
-      <p className="text-[var(--secondary)] mb-12 max-w-xl">
+      <p className="text-[var(--secondary)] mb-4 max-w-xl">
         Cada pieza es única, hecha a mano con tintes naturales. Elige la que resuene contigo.
+      </p>
+      <p className="text-sm text-[var(--secondary)]/70 mb-12">
+        🚚 Envío certificado: 5,00 € (tarifa plana)
       </p>
 
       {success && (
