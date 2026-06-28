@@ -1,0 +1,26 @@
+# Vivián Araya — vivi-web
+# Netlify auto-detects Next.js, but explicit config gives us control
+# over build settings, redirects, and branch deploys.
+
+[build]
+  command   = "npm run build"
+  publish   = ".next"
+
+# Deploy Previews: Netlify auto-generates them for PRs/branches.
+# No extra config needed — just push a branch and Netlify builds it.
+# Preview URL pattern: https://deploy-preview-<PR>--vivian-araya-studio.netlify.app
+
+# Production deploy only from master branch (configured in Netlify UI)
+# All other branches get Deploy Previews, not production deploys.
+
+[[redirects]]
+  from = "/api/*"
+  to   = "/api/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
