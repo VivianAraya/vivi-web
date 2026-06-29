@@ -23,7 +23,6 @@ function getSupabaseAdmin() {
 
 export async function POST(request) {
   const stripe = getStripe();
-  const supabase = getSupabaseAdmin();
 
   // 1. Raw body — NUNCA request.json() con Stripe webhooks
   const body = await request.text();
@@ -47,30 +46,40 @@ export async function POST(request) {
   // Solo nos interesa checkout.session.completed
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    const { pieza_id, gama_id } = session.metadata || {};
 
-    const { error } = await supabase.from("pedidos").insert({
-      stripe_session_id: session.id,
-      stripe_customer_email: session.customer_details?.email || "",
-      pieza_id: pieza_id || null,
-      gama_id: gama_id || null,
-      cantidad: 1,
-      total: session.amount_total || 0,
-      estado: "pagado",
-      nombre_cliente: session.customer_details?.name || "",
-      metadata: session.metadata || {},
-    });
+    // Extraer solo lo que existe en metadata
+    const pieza_id = session.metadata?.pieza_id || null;
+    const gama_id = session.metadata?.gama_id || null;
 
-    if (error) {
-      console.error("Error guardando pedido:", error.message);
-      return new Response("Webhook error", { status: 500 });
+    // cantidad y total vienen del objeto session, NO de metadata
+    const cantidad = 1;
+    const total = session.amount_total || 0;
+    const email = session.customer_details?.email || "";
+
+    try {
+      const supabase = getSupabaseAdmin();
+      const { error } = await supabase.from("pedidos").insert({
+        stripe_session_id: session.id,
+        stripe_customer_email: email,
+        pieza_id,
+        gama_id,
+        cantidad,
+        total,
+        estado: "pagado",
+        nombre_cliente: session.customer_details?.name || "",
+        metadata: session.metadata || {},
+      });
+
+      if (error) {
+        console.error("❌ Error guardando pedido:", error.message, error.details);
+      } else {
+        console.log(`✅ Pedido guardado: ${session.id}`);
+      }
+    } catch (err) {
+      console.error("❌ Excepción al guardar pedido:", err.message);
     }
-
-    console.log(`✅ Pedido guardado: ${session.id}`);
   }
 
-  return new Response(JSON.stringify({ received: true }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  // Siempre devolver 200 — si falla la BD, Stripe no debe reintentar
+  return new Response("OK", { status: 200 });
 }
