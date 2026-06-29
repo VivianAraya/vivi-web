@@ -24,20 +24,24 @@ function getSupabaseAdmin() {
 export async function POST(request) {
   const stripe = getStripe();
   const supabase = getSupabaseAdmin();
-  const sig = request.headers.get("stripe-signature");
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!sig || !webhookSecret) {
-    return Response.json({ error: "Falta firma o webhook secret" }, { status: 400 });
-  }
+  // 1. Raw body — NUNCA request.json() con Stripe webhooks
+  const body = await request.text();
 
+  // 2. Firma del header
+  const signature = request.headers.get("stripe-signature");
+
+  // 3. Construir evento con verificación criptográfica
   let event;
   try {
-    const rawBody = await request.text();
-    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
-  } catch (error) {
-    console.error("Webhook signature error:", error.message);
-    return Response.json({ error: error.message }, { status: 400 });
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    console.error("⚠️ Stripe webhook signature error:", err.message);
+    return new Response("Webhook error", { status: 400 });
   }
 
   // Solo nos interesa checkout.session.completed
@@ -59,11 +63,14 @@ export async function POST(request) {
 
     if (error) {
       console.error("Error guardando pedido:", error.message);
-      return Response.json({ error: error.message }, { status: 500 });
+      return new Response("Webhook error", { status: 500 });
     }
 
     console.log(`✅ Pedido guardado: ${session.id}`);
   }
 
-  return Response.json({ received: true });
+  return new Response(JSON.stringify({ received: true }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
 }
