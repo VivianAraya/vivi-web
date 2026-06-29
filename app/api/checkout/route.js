@@ -26,6 +26,8 @@ export async function POST(request) {
     // Envío: 5 € (500 céntimos) — tarifa plana
     const shippingCents = 500;
 
+    const baseUrl = "http://akzjbx2tnc2jgixao72blhm.185.185.82.16.sslip.io";
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -52,8 +54,8 @@ export async function POST(request) {
         },
       ],
       mode: "payment",
-      success_url: `${request.headers.get("origin")}/tienda?success=true`,
-      cancel_url: `${request.headers.get("origin")}/tienda?canceled=true`,
+      success_url: `${baseUrl}/tienda?success=true`,
+      cancel_url: `${baseUrl}/tienda?canceled=true`,
       metadata: {
         pieza_id,
         gama_id: gama_id || "",
