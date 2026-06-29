@@ -26,7 +26,7 @@ export async function POST(request) {
     // Envío: 5 € (500 céntimos) — tarifa plana
     const shippingCents = 500;
 
-    const baseUrl = "http://akzjbx2tnc2jgixao72blhm.185.185.82.16.sslip.io";
+    const baseUrl = "http://akzjbix2tnc2jgixao72b1hm.185.185.82.16.sslip.io";
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
